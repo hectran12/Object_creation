@@ -43,8 +43,11 @@ function getValue (index, dea = true, content = "") {
 
 function add(index) {
     try {
-        const item = getValue(index);
+        var item = getValue(index);
         if (item.t == "SET") { item.o.add(item.v); }
+        else if(item.t == "OBJECT") {
+            item.o[item.n] = item.v;
+        }
         showText("Action success");
     } catch {
         showText("Error");
@@ -66,6 +69,8 @@ function deletes (index) {
         const item = getValue(index, false, "key");
         if (item.t == "SET" || item.t == "MAP") {
             item.o.delete(item.v);
+        } else if (item.t == "ARRAY") {
+            delete item.o[item.v];
         }
         showText("Action success");
     } catch {
@@ -158,6 +163,78 @@ function entries (index) {
             }
         }
         showText("View console");
+    } catch {
+        showText("Error");
+    }
+}
+
+function toStrings (index) {
+    try {
+        const item = getValue(index, "none");
+        console.log(item.o.toString());
+        showText("View console");
+    } catch {
+        showText("Error");
+    }
+}
+
+function join (index) {
+    try {
+        const item = getValue(index, false, "separator: ");
+        if(item.t == "ARRAY") {
+            console.log(item.o.join(item.v));
+        }
+        showText("View console");
+    } catch {
+        showText("Error");
+    }
+}
+
+function pops (index) {
+    try {
+        const item = getValue(index, "none");
+        if (item.t == "ARRAY") {
+            item.o.pop();
+            console.log(item.o);
+        }
+        showText("View console");
+    } catch {
+        showText("Error");
+    }
+}
+
+function pushs (index) {
+    try {
+        const item = getValue(index, false, "value: ");
+        if (item.t == "ARRAY") {
+            var length = item.o.push(item.v);
+            showText("Length: " + length);
+        }
+        showText("View console");
+    } catch {
+        showText("Error");
+    }
+}
+
+function shift (index) {
+    try {
+        const item = getValue(index, "none");
+        if (item.t == "ARRAY") {
+            var result = item.o.shift();
+            showText("Element has removed: " + result);
+        }
+    } catch {
+        showText("Error");
+    }
+}
+
+function unshift (index) {
+    try {
+        const item = getValue(index, false, "value: ");
+        if (item.t == "ARRAY") {
+            var result = item.o.unshift(item.v);
+            showText("Length: " + result);
+        }
     } catch {
         showText("Error");
     }
