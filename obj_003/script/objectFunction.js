@@ -90,14 +90,7 @@ class ObjectFunctions {
         var text = '';
         const ltext = {
             "Info": "View method OBJECT Object",
-            add: 'Adds a new element to the Object',
-            delete: 'Deletes an element from the Object',
-            has: 'Returns true if an element is in the Object',
-            clear: 'Removes all elements from the Object',
-            forEach: 'Calls a function for each element in the Object',
-            values: 'Returns an array of values of the Object',
-            keys: 'Returns an array of keys of the Object',
-            entries:  'Returns an array of [key, value] pairs for each element in the Object'
+            "add": "Adds a new element to the Object"
         };
 
         for (let [key, value] of Object.entries(ltext)) {
@@ -129,14 +122,13 @@ class ArrayFunctions {
         var text = '';
         const ltext = {
             "Info": "View method ARRAY Object",
-            add: 'Adds a new element to the Array',
-            delete: 'Deletes an element from the Array',
-            has: 'Returns true if an element is in the Array',
-            clear: 'Removes all elements from the Array',
-            forEach: 'Calls a function for each element in the Array',
-            values: 'Returns an array of values of the Array',
-            keys: 'Returns an array of keys of the Array',
-            entries:  'Returns an array of [key, value] pairs for each element in the Array'
+            toString: "Returns a string representing the array",
+            join: "Returns a string of all elements joined by a string",
+            pop: "Removes the last element from the array",
+            push: "Adds a new element to the end of the array",
+            shift: "Removes the first element from the array",
+            unshift: "Adds a new element to the beginning of the array",
+            delete: "Deletes an element from the array",
         };
 
         for (let [key, value] of Object.entries(ltext)) {
