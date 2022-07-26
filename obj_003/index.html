@@ -333,7 +333,8 @@
                     showText("Adudududud hacker lo");
                 }
                 for (let [key, value] of Object.entries(obj.GuiMethod("set"))) {
-                    textButton += key != "Info" ? key == "delete" || key == "clear" || key == "forEach" ? 
+                    textButton += key != "Info" ? key == "delete" || key == "clear" ||
+                     key == "forEach" || key == "toString" || key == "pop" || key == "push" ? 
                     `<button onclick="${key}s(${index})" class="button">${key}</button>` :
                     `<button onclick="${key}(${index})" class="button">${key}</button>` : '';
                 }
@@ -526,7 +527,12 @@
             if (Number.isInteger(index)) {
                 const value = data[index];
                 console.log(value.objCreation[value.name]);
-                const amount = value.objCreation[value.name].size;
+                var amount = NaN;
+                if(value.type == "Array") {
+                    amount = value.objCreation[value.name].length;
+                } else {
+                    amount = value.objCreation[value.name].size;
+                }
                 var text = "View console. Object have ";
                 if (amount == 0) {
                     text += "no element";
