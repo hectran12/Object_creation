@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object creation Javascript</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        
+        .dropbtn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .dropbtn:hover,
+        .dropbtn:focus {
+            background-color: #2980B9;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+        
+        .show {
+            display: block;
+        }
+        /* Full-width input fields */
+        
+        input[type=text],
+        input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        /* Set a style for all buttons */
+        
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        button:hover {
+            opacity: 0.8;
+        }
+        /* Extra styles for the cancel button */
+        
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+        /* Center the image and position the close button */
+        
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+        
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+        
+        .container {
+            padding: 16px;
+        }
+        
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+        /* The Modal (background) */
+        
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+            padding-top: 60px;
+        }
+        /* Modal Content/Box */
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto;
+            /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+        /* The Close Button (x) */
+        
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+        /* Add Zoom Animation */
+        
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+        
+        @-webkit-keyframes animatezoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+        
+        @keyframes animatezoom {
+            from {
+                transform: scale(0)
+            }
+            to {
+                transform: scale(1)
+            }
+        }
+        /* Change styles for span and cancel button on extra small screens */
+        
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+        
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+        
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        
+        @-webkit-keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+        
+        @-webkit-keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div id="id01" class="modal">
+
+            <form class="modal-content animate">
+                <div class="container" id="content-input">
+                    <input type="text" placeholder="Enter name" id="name_add" required>
+                    <input type="text" placeholder="Enter value" id="value_add" required>
+                    <button type="button" onclick="document.getElementById('id01').style.display='none';" class="button">Add Element</button>
+                </div>
+
+                <div class="container" style="background-color:#f1f1f1">
+                    <button type="button" onclick="document.getElementById('name_add').value = '';document.getElementById('value_add').value = '';document.getElementById('id01').style.display='none';" class="cancelbtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Create a new Object type</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a onclick="changeElement(1)">Create set Object</a>
+                <a onclick="changeElement(0)">Create map Object</a>
+                <a onclick="changeElement(2)">Create object</a>
+                <a onclick="changeElement(3)">Create array</a>
+            </div>
+        </div>
+        <div id="showEventChange">
+        </div>
+        <div id="listElement">
+        </div>
+        <div id="snackbar"></div>
+    </center>
+    <script src="script/event.js"></script>
+    <script src="script/table.js"></script>
+    <script src="script/objectFunction.js"></script>
+    <script>
+        let data = [];
+
+
+        function functionElement(id) {
+            let index = findIndex(id);
+            var textButton = '';
+            if (Number.isInteger(index)) {
+                const item = data[index];
+                const type = (item.type + "").toUpperCase();
+                textButton += `<button onclick="showGUI('${id}', '${type}')" class="button">Gui Method</button>`;
+                var obj = null;
+                if (type == "SET") {
+                    obj = new SetFunctions(item);
+                } else if (type == "MAP") {
+                    obj = new MapFunctions(item);
+                } else if (type == "OBJECT") {
+                    obj = new ObjectFunctions(item);
+                } else if (type == "ARRAY") {
+                    obj = new ArrayFunctions(item);
+                } else {
+                    showText("Adudududud hacker lo");
+                }
+                for (let [key, value] of Object.entries(obj.GuiMethod("set"))) {
+                    textButton += key != "Info" ? key == "delete" || key == "clear" ||
+                     key == "forEach" || key == "toString" || key == "pop" || key == "push" ? 
+                    `<button onclick="${key}s(${index})" class="button">${key}</button>` :
+                    `<button onclick="${key}(${index})" class="button">${key}</button>` : '';
+                }
+            }
+            showText(textButton, 4999);
+        }
+
+        function ExportCode (id) {
+            const index = findIndex(id);
+            const item = data[index];
+            if (prompt("[clear: clear code, different keyword: copy code]: ") == "clear") {
+                item.code = item.codegoc;
+                showText("Rest code success");
+            } else {
+                console.log('Code:' + `
+                    ${item.code}
+                `);
+             
+                showText(genDownload(item.code, item.dateString));
+            }
+        }
+
+        function genDownload (data, date) {
+            var c = document.createElement("a");
+            c.download = date+".txt";
+            var t = new Blob([data], {
+            type: "text/plain"
+            });
+            c.href = window.URL.createObjectURL(t);
+            c.click();
+            return "Generate and download success";
+        }
+
+        function showGUI(id, type) {
+            let index = findIndex(id);
+            const item = data[index];
+            if (Number.isInteger(index)) {
+                if (type == "SET") {
+                    showText(new SetFunctions(item).GuiMethod(), 4999);
+                } else if (type == "MAP") {
+                    showText(new MapFunctions(item).GuiMethod(), 4999);
+                } else if (type == "OBJECT") {
+                    showText(new ObjectFunctions(item).GuiMethod(), 4999);
+                } else if (type == "ARRAY") {
+                    showText(new ArrayFunctions(item).GuiMethod(), 4999);
+                } else {
+                    showText("Adudududud hacker lo");
+                }
+            }
+        }
+
+        function create() {
+            function element(id, name, type) {
+                this.objCreation = {};
+                var content = `
+                    let obj = new ${type};
+                    this.objCreation['${name}'] = obj;
+                `;
+                eval(content);
+                this.name = name;
+                this.id = id;
+                this.type = type;
+                this.dateCreation = new Date();
+                this.dateString = this.dateCreation.getUTCDate() + "-" + this.dateCreation.getUTCMonth() + "-" + this.dateCreation.getUTCFullYear() + "-" + this.dateCreation.getUTCMinutes() + "-" + this.dateCreation.getUTCHours() + "-" + this.dateCreation.getUTCSeconds();
+                this.codegoc = `const dateCreate = new Date("${this.dateCreation}");
+const ${name.toLowerCase()} = new ${type}();`;
+                this.code = this.codegoc;
+                //console.log(this.code);
+                
+                function getContent() {
+                    return this.objCreation;
+                }
+            }
+            element.prototype.gui = 'Function has been created by Hex Tran';
+            let id, obj, name, type, ele;
+            ele = document.getElementById("name");
+            name = ele.value;
+            type = ele.classList.value;
+            id = randomNumber(100000, 99999999);
+            console.log(id, '=>', name, '=>', type)
+            obj = new element(id, name, type);
+            data.push(obj);
+            console.log('Create success');
+            reload();
+        }
+
+        function findIndex(id) {
+            let index = data.findIndex(x => x.id == id);
+            return index == -1 ? false : index;
+        }
+
+        function resetInput() {
+            document.getElementById('name_add').value = '';
+            document.getElementById('value_add').value = '';
+        }
+
+        function addElement(id) {
+            var index = findIndex(id);
+            if (Number.isInteger(index)) {
+                const item = data[index];
+                const obj = item.objCreation[item.name];
+                const type = (item.type + '').toUpperCase();
+                let name, value, name_temp, value_temp, func_name, func_value;
+                func_name = () => {
+                    name = null;
+                    name = document.getElementById("name_add").value;
+                    try {
+                        eval('name_temp = ' + name);
+                        return true;
+                    } catch {
+                        alert("Error");
+                        return false;
+                    }
+                };
+                func_value = () => {
+                    value = null;
+                    value = document.getElementById("value_add").value;
+                    console.log(value);
+                    try {
+                        eval('value_temp = ' + value);
+                        return true;
+                    } catch {
+                        alert("Error");
+                        return false;
+                    }
+                };
+
+
+                document.getElementById("id01").style.display = "block";
+                document.getElementById("name_add").style.display = "block";
+                document.getElementById("value_add").style.display = "block";
+
+                let n, v, check;
+                n = document.getElementById("name_add");
+                v = document.getElementById("value_add");
+                if (type == 'SET' || type == 'ARRAY') {
+                    check = false;
+                    document.getElementById("name_add").style.display = "none";
+                } else {
+                    check = true;
+                }
+                var condir = false;
+                func_add = () => {
+                    if (type == 'SET') {
+                        try {
+                            obj.add(value_temp);
+                            content = `
+${item.name.toLowerCase()}.add(${typeof value_temp == 'string' ? '"' + value_temp + '"' : value_temp});`;
+                            item.code += content;
+                        } catch (error) {
+                            console.log('Add fail');
+                        }
+                    } else if (type == 'MAP') {
+                        try {
+                            obj.set(name_temp, value_temp);
+                            content = `
+${item.name.toLowerCase()}.set(${typeof name_temp == 'string' ? '"' + name_temp + '"' : name_temp}, ${typeof value_temp == 'string' ? '"' + value_temp + '"' : value_temp});`;
+                            item.code += content;
+                        } catch (error) {
+                            console.log('Add fail');
+                        }
+                    } else if (type == "OBJECT") {
+                        try {
+                            obj[name_temp] = value_temp;
+                            content = `
+${item.name.toLowerCase()}.${name_temp} = ${typeof value_temp == 'string' ? '"' + value_temp + '"' : value_temp};`;
+                            item.code += content;
+                        } catch (error) {
+                            console.log('Add fail');
+                        }
+                    } else if (type == 'ARRAY') {
+                        try {
+                            obj.push(value_temp);
+                            content = `
+${item.name.toLowerCase()}.push(${typeof value_temp == 'string' ? '"' + value_temp + '"' : value_temp});`;
+                        } catch (error) {
+                            console.log('Add fail');
+                        }
+                    }
+                    showText("Add success");
+                    //resetInput();
+                    clearInterval(inv);
+                };
+                const inv = setInterval(() => {
+                    if (document.getElementById("id01").style.display == "none") {
+                        if (check) {
+                            if (n.value.length > 0 || v.value.length > 0) {
+                                condir = true;
+                            } else {
+                                condir = false;
+                                clearInterval(inv);
+                            }
+                        } else {
+                            if (v.value.length > 0) {
+                                condir = true;
+                            } else {
+                                condir = false;
+                                clearInterval(inv);
+                            }
+                        }
+                    }
+
+                    if (condir) {
+                        let cv1, cv2;
+                        let check2 = false;
+                        console.log(check2);
+                        if (check) {
+                            cv1 = func_name();
+                            cv2 = func_value();
+                            check2 = cv1 && cv2;
+                        } else {
+                            cv1 = func_value();
+                            check2 = cv1;
+                        }
+                        console.log(check2);
+                        if (check2) {
+                            func_add();
+                            clearInterval(inv);
+                        } else {
+                            clearInterval(inv);
+                        }
+
+                    }
+                }, 1000);
+
+
+            }
+        }
+
+        function viewElement(id) {
+            var index = findIndex(id);
+            if (Number.isInteger(index)) {
+                const value = data[index];
+                console.log(value.objCreation[value.name]);
+                var amount = NaN;
+                if(value.type == "Array") {
+                    amount = value.objCreation[value.name].length;
+                } else {
+                    amount = value.objCreation[value.name].size;
+                }
+                var text = "View console. Object have ";
+                if (amount == 0) {
+                    text += "no element";
+                } else if (amount == 1) {
+                    text += "an element";
+                } else {
+                    text += amount + " elements";
+                }
+                showText(text);
+            }
+        }
+
+        function removeElement(id) {
+            var index = findIndex(id);
+            if (Number.isInteger(index)) {
+                data.splice(index, 1);
+                reload();
+                showText("Remove success");
+            } else {
+                showText("Remove fail");
+            }
+        }
+
+
+        function reload() {
+            return reloadTable(data);
+        }
+    </script>
+    <script>
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.getElementById("name_add").value = '';
+                document.getElementById("value_add").value = '';
+            }
+        }
+    </script>
+    <script>
+        function showText(text, delay = 3000) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = text;
+            x.className = "show";
+            if (delay > 3000) {
+                x.innerHTML += `
+                    <button onclick="var xclone = document.getElementById('snackbar'); xclone.className = xclone.className.replace('show', '');">Close</button>
+                `;
+            } else {
+                let cav = setTimeout(function() {
+                    x.className = x.className.replace("show", "");
+                }, delay);
+            }
+
+        }
+    </script>
+    <script src="script/functions.js"></script>
+    
+</body>
+
+</html>
